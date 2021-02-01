@@ -1,13 +1,12 @@
 from strutils import  Whitespace, Letters, Digits, HexDigits, IdentChars, IdentStartChars, NewLines, AllChars
 {.experimental: "views".}
 from strutils import nil
-from math import pow
 
-proc `$`*(s: openArray[char]): string =
+func `$`*(s: openArray[char]): string =
   for x in s:
     result.add(x)
 
-proc split*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]] =
+func split*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]] =
   result = @[]
   var 
     i = 0
@@ -23,7 +22,7 @@ proc split*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]]
   if lastMatch < s.len:
     result.add s.toOpenArray(lastMatch, s.high)
 
-proc split*(s: openArray[char], seps: set[char] = Whitespace, maxSplit = -1): seq[openArray[char]] =
+func split*(s: openArray[char], seps: set[char] = Whitespace, maxSplit = -1): seq[openArray[char]] =
   result = @[]
   var 
     i = 0
@@ -39,7 +38,7 @@ proc split*(s: openArray[char], seps: set[char] = Whitespace, maxSplit = -1): se
   if lastMatch < s.len:
     result.add s.toOpenArray(lastMatch, s.high)
 
-proc split*(s: openArray[char], sep: openarray[char], maxSplit = -1): seq[openArray[char]] =
+func split*(s: openArray[char], sep: openarray[char], maxSplit = -1): seq[openArray[char]] =
   result = @[]
   var 
     i = 0
@@ -56,10 +55,10 @@ proc split*(s: openArray[char], sep: openarray[char], maxSplit = -1): seq[openAr
   if lastMatch < s.len:
     result.add s.toOpenArray(lastMatch, s.len - 1)
 
-proc splitWhiteSpace*(s: openArray[char], maxSplit = -1): seq[openArray[char]] =
+func splitWhiteSpace*(s: openArray[char], maxSplit = -1): seq[openArray[char]] =
   s.split(Whitespace, maxSplit)
 
-proc rSplit*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]] =
+func rSplit*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]] =
   result = @[]
   var 
     i = s.high
@@ -75,7 +74,7 @@ proc rSplit*(s: openArray[char], sep: char , maxSplit = -1): seq[openArray[char]
   if lastMatch > 0:
     result.add s.toOpenArray(0, lastMatch)
 
-proc strip*(s: openArray[char], leading, trailing = true, chars = Whitespace): openArray[char] =
+func strip*(s: openArray[char], leading, trailing = true, chars = Whitespace): openArray[char] =
   var
     i = 0
     startPos = 0
@@ -95,10 +94,10 @@ proc strip*(s: openArray[char], leading, trailing = true, chars = Whitespace): o
       dec i
   result = s.toOpenArray(startPos,endPos)
 
-proc integerOutOfRangeError() {.noinline.} =
+func integerOutOfRangeError() {.noinline.} =
   raise newException(ValueError, "Parsed integer outside of valid range")
 
-proc parseInt*(s: openArray[char]): BiggestInt =
+func parseInt*(s: openArray[char]): BiggestInt =
   var
     sign: BiggestInt = -1
     i, b: BiggestInt = 0
@@ -121,6 +120,19 @@ proc parseInt*(s: openArray[char]): BiggestInt =
       integerOutOfRangeError()
     else:
       result = b * sign
+
+func `==`*(s: seq[openArray[char]], s2: seq[string]): bool = 
+  for i, x in s2:
+    if x != s[i]:
+      return false
+  result = true
+
+func `==`*(s2: seq[string], s: seq[openArray[char]]): bool = 
+  for i, x in s2:
+    if x != s[i]:
+      return false
+  result = true
+
 
 iterator reversed*(s: seq[openArray[char]]): openArray[char] =
   for i in countDown(s.high,0):
