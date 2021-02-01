@@ -95,31 +95,32 @@ proc strip*(s: openArray[char], leading, trailing = true, chars = Whitespace): o
       dec i
   result = s.toOpenArray(startPos,endPos)
 
-proc parseInt*(s: openArray[char]): int =
-  var 
-    i = 0
-    place = s.high
-  while i < s.len:
-    let val = 
-      case s[i]:
-      of '0': 0
-      of '1': 1
-      of '2': 2
-      of '3': 3
-      of '4': 4
-      of '5': 5
-      of '6': 6
-      of '7': 7
-      of '8': 8
-      of '9': 9
-      of ' ', ',', '.', '_':
-        dec place
-        0
+proc integerOutOfRangeError() {.noinline.} =
+  raise newException(ValueError, "Parsed integer outside of valid range")
+
+proc parseInt*(s: openArray[char]): BiggestInt =
+  var
+    sign: BiggestInt = -1
+    i, b: BiggestInt = 0
+  if i < s.len:
+    if s[i] == '+': inc(i)
+    elif s[i] == '-':
+      inc(i)
+      sign = 1
+  if i < s.len and s[i] in {'0'..'9'}:
+    b = 0
+    while i < s.len and s[i] in {'0'..'9'}:
+      let c = ord(s[i]) - ord('0')
+      if b >= (low(BiggestInt) + c) div 10:
+        b = b * 10 - c
       else:
-        raise newException(ValueError, "Non Digit Detected")
-    result += val * 10f32.pow(place.float).int
-    dec place
-    inc i
+        integerOutOfRangeError()
+      inc(i)
+      while i < s.len and s[i] == '_': inc(i) # underscores are allowed and ignored
+    if sign == -1 and b == low(BiggestInt):
+      integerOutOfRangeError()
+    else:
+      result = b * sign
 
 iterator reversed*(s: seq[openArray[char]]): openArray[char] =
   for i in countDown(s.high,0):

@@ -5,12 +5,12 @@ Below is a comparison to the `std/strutils`, the file can be found in `/tests/be
 
 ```
 name ............................... min time      avg time    std dv   runs
-Views Single Char Split ............ 4.779 ms      5.006 ms    ±0.130  x1000
-Stdlib Single Char Split ........... 8.606 ms      8.902 ms    ±0.166  x1000
-Views Multi Char Split ............. 8.495 ms      8.791 ms    ±0.163  x1000
-Stdlib Multi Char Split ........... 12.772 ms     13.124 ms    ±0.227  x1000
-Views Int Parse .................... 4.743 ms      4.991 ms    ±0.258  x1000
-Stdlib Int Parse ................... 8.879 ms      9.174 ms    ±0.179  x1000
-View String Split .................. 6.220 ms      6.476 ms    ±0.153  x1000
-Stdlib String Split ................ 7.261 ms      7.559 ms    ±0.191  x1000
+Views Single Char Split ............ 4.424 ms      4.718 ms    ±0.177  x1000
+Stdlib Single Char Split ........... 8.639 ms      9.459 ms    ±0.595  x1000
+Views Multi Char Split ............. 8.404 ms      9.130 ms    ±0.402  x1000
+Stdlib Multi Char Split ........... 12.251 ms     12.660 ms    ±0.283  x1000
+Views Int Parse .................... 9.897 ms     10.426 ms    ±0.344  x1000
+Stdlib Int Parse .................. 14.421 ms     14.939 ms    ±0.371  x1000
+View String Split .................. 6.245 ms      6.550 ms    ±0.158  x1000
+Stdlib String Split ................ 7.630 ms      8.140 ms    ±0.350  x1000
 ```

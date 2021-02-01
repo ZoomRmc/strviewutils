@@ -33,43 +33,24 @@ timeit "Stdlib Multi Char Split", 1000:
   for x in strutils.split(TempData, {' ','3'}): 
     discard
 
-var 
-  viewI: seq[int]
-  stdlibI: seq[int]
 
 timeit "Views Int Parse", 1000:
-  var hasAdded{.global.} = false
   for x in TempData.split(' '):
-    if not hasAdded:
-      try:
-        viewI.add x.parseInt
-      except: discard
-  hasAdded = true
-timeit "Stdlib Int Parse", 1000:
-  var hasAdded{.global.} = false
-  for x in strutils.split(TempData, ' '):
-    if not hasAdded:
-      try:
-        stdlibI.add strutils.parseInt(x)
-      except: discard
-  hasAdded = true
+    try:
+      let a = x.parseInt
+    except: discard
 
-assert stdlibI == viewI
-var 
-  view: seq[string]
-  stdlib: seq[string]
+timeit "Stdlib Int Parse", 1000:
+  for x in strutils.split(TempData, ' '):
+    try: 
+      let a = strutils.parseInt(x)
+    except: discard
+
 
 timeit "View String Split", 1000:
-  var hasAdded{.global.} = false
   for line in TempData.split("12"):
-    if not hasAdded:
-      view.add $line
-  hasAdded = true
+    discard
 
 timeit "Stdlib String Split", 1000:
-  var hasAdded{.global.} = false
   for line in strutils.split(TempData, "12"):
-    if not hasAdded:
-      stdlib.add line
-  hasAdded = true
-assert view == stdlib
+    discard
