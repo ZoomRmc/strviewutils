@@ -48,9 +48,9 @@ timeit "Stdlib Int Parse", 1000:
 
 
 timeit "View String Split", 1000:
-  for line in TempData.split("12"):
+  for line in TempData.split("3"):
     discard
 
 timeit "Stdlib String Split", 1000:
-  for line in strutils.split(TempData, "12"):
+  for line in strutils.split(TempData, "3"):
     discard

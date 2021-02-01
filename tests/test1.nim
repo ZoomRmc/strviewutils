@@ -24,10 +24,6 @@ test "storing":
   let 
     data = "Hello world views"
     split = data.split(' ')
-    hello: openArray[char] = split[0] 
-    world: openArray[char] = split[1]
-    views: openArray[char] = split[2]
-
-  assert hello == "Hello"
-  assert world == "world"
-  assert views == "views"
+  assert split[0] == "Hello"
+  assert split[1] == "world"
+  assert split[2] == "views"
