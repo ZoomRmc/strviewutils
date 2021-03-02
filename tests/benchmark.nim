@@ -19,38 +19,38 @@ let TempData = block:
 
 timeit "Views Single Char Split", 1000:
   for x in TempData.split(' '):
-    discard
+    keep(x)
 
 timeit "Stdlib Single Char Split", 1000:
   for x in strutils.split(TempData, ' '): 
-    discard
+    keep(x)
 
 timeit "Views Multi Char Split", 1000:
   for x in TempData.split({' ','3'}):
-    discard
+    keep(x)
 
 timeit "Stdlib Multi Char Split", 1000:
   for x in strutils.split(TempData, {' ','3'}): 
-    discard
+    keep(x)
 
 
 timeit "Views Int Parse", 1000:
   for x in TempData.split(' '):
     try:
-      let a = x.parseInt
+      keep(x.parseInt)
     except: discard
 
 timeit "Stdlib Int Parse", 1000:
   for x in strutils.split(TempData, ' '):
     try: 
-      let a = strutils.parseInt(x)
+      keep(strutils.parseInt(x))
     except: discard
 
 
 timeit "View String Split", 1000:
   for line in TempData.split("3"):
-    discard
+    keep(line)
 
 timeit "Stdlib String Split", 1000:
   for line in strutils.split(TempData, "3"):
-    discard
+    keep(line)
